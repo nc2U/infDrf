@@ -27,7 +27,7 @@ urlpatterns = [
     # shkim
     path('', HomeView.as_view(), name='home'),
     path('blog/', include('blog.urls')),
-    path('api/v1/', include('apiV1.urls')),
+    path('api/', include('apiV1.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
