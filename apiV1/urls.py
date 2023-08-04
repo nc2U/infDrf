@@ -3,7 +3,7 @@ from django.urls import path
 from apiV1 import views
 
 
-app_name = 'api'
+app_name = 'apiV1'
 urlpatterns = [
     path('post/list/', views.ApiPostLV.as_view(), name='post_list'),
     path('post/<int:pk>/', views.ApiPostDV.as_view(), name='post_detail'),
