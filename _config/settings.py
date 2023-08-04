@@ -44,7 +44,12 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
+    'rest_framework',
+]
+
+INSTALLED_APPS += [
     'apiV1.apps.ApiV1Config',
+    'apiV2.apps.Apiv2Config',
     'blog.apps.BlogConfig',
 ]
 
@@ -141,3 +146,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL =
 
 # LOGGING =
+
+# DRF
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
+}
