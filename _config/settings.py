@@ -49,6 +49,7 @@ INSTALLED_APPS += [
 
 INSTALLED_APPS += [
     'apiV1.apps.ApiV1Config',
+    'apiV2.apps.Apiv2Config',
     'blog.apps.BlogConfig',
 ]
 
