@@ -24,10 +24,13 @@ from _config.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # shkim
+    # apps
     path('', HomeView.as_view(), name='home'),
     path('blog/', include('blog.urls')),
-    path('api/', include('apiV1.urls')),
+    path('api/v1/', include('apiV1.urls')),
+    path('api/v2/', include('apiV2.urls')),
+    # DRF
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
