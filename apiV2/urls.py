@@ -19,5 +19,6 @@ from apiV2.views import *
 urlpatterns = [
     path('post/', PostListAPIView.as_view(), name='post-list'),
     path('post/<int:pk>/', PostRetrieveAPIView.as_view(), name='post-detail'),
+    path('post/<int:pk>/like/', PostLikeAPIView.as_view(), name='post-like'),
     path('comment/', CommentCreateAPIView.as_view(), name='comment-list'),
 ]
