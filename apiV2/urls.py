@@ -1,12 +1,24 @@
-from django.urls import path, include
-from rest_framework import routers
+# from django.urls import path, include
+# from rest_framework import routers
+#
+# from apiV2.views import UserViewSet, PostViewSet, CommentViewSet
+#
+# router = routers.DefaultRouter()
+# router.register(r'user', UserViewSet)
+# router.register(r'post', PostViewSet)
+# router.register(r'comment', CommentViewSet)
+#
+# urlpatterns = [
+#     path('', include(router.urls)),
+# ]
 
-from apiV2.views import UserViewSet, PostViewSet
+from django.urls import path
 
-router = routers.DefaultRouter()
-router.register(r'user', UserViewSet)
-router.register(r'post', PostViewSet)
+from apiV2.views import *
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('post/', PostListAPIView.as_view(), name='post-list'),
+    path('post/<int:pk>/', PostRetrieveAPIView.as_view(), name='post-detail'),
+    path('post/<int:pk>/like/', PostLikeAPIView.as_view(), name='post-like'),
+    path('comment/', CommentCreateAPIView.as_view(), name='comment-list'),
 ]
