@@ -13,7 +13,7 @@ class Post(models.Model):
     like = models.PositiveSmallIntegerField('LIKE', default=0)
 
     class Meta:
-        ordering = ('update_dt',)
+        ordering = ('create_dt',)
 
     def __str__(self):
         return self.title
@@ -46,4 +46,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.short_content
-    

@@ -16,13 +16,32 @@ class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ['id', 'title', 'image', 'like', 'category']
+        fields = ['id', 'title', 'image', 'like', 'category', 'create_dt']
 
 
 class PostRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         exclude = ['create_dt']
+
+
+class PostSerializerSub(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('id', 'title')
+
+
+class CommentInPostDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'content', 'update_dt')
+
+
+class PostDetailSerializer(serializers.Serializer):
+    post = PostRetrieveSerializer()
+    prevPost = PostSerializerSub()
+    nextPost = PostSerializerSub()
+    commentList = CommentInPostDetailSerializer(many=True)
 
 
 # class PostLikeSerializer(serializers.ModelSerializer):

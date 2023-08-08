@@ -20,13 +20,14 @@
 #     serializer_class = CommentSerializer
 from collections import OrderedDict
 
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.generics import (ListAPIView, RetrieveAPIView,
                                      CreateAPIView, GenericAPIView)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apiV2.serializers import (PostListSerializer, PostRetrieveSerializer,
+from apiV2.serializers import (PostListSerializer, PostDetailSerializer,
                                CommentSerializer, CateTagSerializer)
 from blog.models import Post, Comment, Category, Tag
 
@@ -36,9 +37,9 @@ from blog.models import Post, Comment, Category, Tag
 #     serializer_class = PostListSerializer
 
 
-class PostRetrieveAPIView(RetrieveAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostRetrieveSerializer
+# class PostRetrieveAPIView(RetrieveAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostRetrieveSerializer
 
 
 # class PostLikeAPIView(UpdateAPIView):
@@ -115,3 +116,35 @@ class PostListAPIView(ListAPIView):
             'format': self.format_kwarg,
             'view': self
         }
+
+
+def get_navigation(instance):
+    try:
+        _prev = instance.get_previous_by_create_dt()
+    except ObjectDoesNotExist:
+        _prev = None
+
+    try:
+        _next = instance.get_next_by_create_dt()
+    except ObjectDoesNotExist:
+        _next = None
+
+    return _prev, _next
+
+
+class PostRetrieveAPIView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        prev_instance, next_instance = get_navigation(instance)
+        comment_list = instance.comment_set
+        data = {
+            'post': instance,
+            'prevPost': prev_instance,
+            'nextPost': next_instance,
+            'commentList': comment_list,
+        }
+        serializer = self.get_serializer(instance=data)
+        return Response(serializer.data)
